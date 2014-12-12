@@ -1,22 +1,31 @@
 #include "stdafx.h"
 #include "RandomNumber.h"
-#include "libs/mtrand/mtrand.h";
+#include <random>
+#include <time.h>
 
+/**
+* Tøída pro vygenerování náhodného èísla
+*/
 
-RandomNumber::RandomNumber(int lenght)
+RandomNumber::RandomNumber()
 {
-	unsigned long init[4] = { 0x123, 0x234, 0x345, 0x456 }, length = lenght;
-	irand = new MTRand_int32(init, length);
 }
 
 
 RandomNumber::~RandomNumber()
 {
-	delete(irand);
 }
 
-int RandomNumber::generate(double min, double max)
+/**
+* Vygeneruje náhodný double
+*/
+double RandomNumber::generate(double min, double max)
 {
-	int randomNum = irand->operator()();
+	double randomNum;
+	std::mt19937 generator(clock());
+	std::uniform_real_distribution<double> dis(min, max);
+
+	randomNum = dis(generator);
+
 	return randomNum;
 }

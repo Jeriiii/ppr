@@ -13,7 +13,7 @@ Individual::Individual(int countMeasuredVal, MeasuredVal ** measuredVals)
 
 Individual::~Individual()
 {
-	printf("des");
+	delete[] measuredVals;
 	delete[] params;
 }
 
@@ -26,7 +26,7 @@ int Individual::cal()
 
 int Individual::createParams()
 {
-	RandomNumber * rn = new RandomNumber(4);
+	RandomNumber * rn = new RandomNumber();
 	params = new double[10];
 	params[0] = rn->generate(0.1, 100.1);
 	return 0;

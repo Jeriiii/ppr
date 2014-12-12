@@ -1,4 +1,4 @@
-#include "MeasuredVal.h";
+#include "MeasuredVal.h"
 #pragma once
 class Individual
 {

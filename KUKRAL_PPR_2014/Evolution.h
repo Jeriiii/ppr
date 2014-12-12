@@ -1,7 +1,8 @@
+#include "Individual.h"
+#include "Bounds.h"
 #pragma once
-#include "Individual.h";
 
-#define COUNT_INDIVIDUALS 40
+#define INI_SECTION_NAME "Bounds"
 
 class Evolution
 {
@@ -18,10 +19,13 @@ private:
 	int createFirstGen();
 	Individual ** individuals;
 	Individual ** mutationVectors;
+	Bounds * bounds;
 public:
 	double getBestFit();
 	/** Probere všechny jedince a vybere toho s nejlepší fitnes fcí */
 	double calBestFit();
 	void createNew();
+private:
+	void loadBounds();
 };
 

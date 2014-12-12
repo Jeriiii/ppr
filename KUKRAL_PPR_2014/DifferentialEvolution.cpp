@@ -16,7 +16,7 @@ DifferentialEvolution::~DifferentialEvolution()
 int DifferentialEvolution::start()
 {
 	Evolution * evo;
-	double bestFit;
+	double bestFit = 0.0;
 	double endParam = 0.001; //ukonèovací konstanta
 	evo = new Evolution();
 

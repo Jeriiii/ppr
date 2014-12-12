@@ -81,14 +81,18 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bounds.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="DifferentialEvolution.h" />
     <ClInclude Include="Evolution.h" />
+    <ClInclude Include="MeasuredCreator.h" />
+    <ClInclude Include="MeasuredVal.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="libs\cpp-sqlite\CppSQLite3.h" />
-    <ClInclude Include="libs\mtrand\mtrand.h" />
     <ClInclude Include="libs\simpleini-master\SimpleIni.h" />
+    <ClInclude Include="PatientMeasuredVals.h" />
     <ClInclude Include="RandomNumber.h" />
+    <ClInclude Include="spline.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -98,7 +102,10 @@
     <ClCompile Include="Evolution.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="KUKRAL_PPR_2014.cpp" />
+    <ClCompile Include="libs\cpp-sqlite\CppSQLite3.cpp" />
     <ClCompile Include="libs\mtrand\mtrand.cpp" />
+    <ClCompile Include="MeasuredCreator.cpp" />
+    <ClCompile Include="PatientMeasuredVals.cpp" />
     <ClCompile Include="RandomNumber.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -107,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\data.sqlite3" />
+    <None Include="bounds.ini" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
