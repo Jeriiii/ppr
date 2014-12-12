@@ -33,6 +33,8 @@
 //						-sqlite3_prepare replaced with sqlite3_prepare_v2
 //						-Added Name based parameter binding to CppSQLite3Statement.
 ////////////////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
 #include "CppSQLite3.h"
 #include <cstdlib>
 
