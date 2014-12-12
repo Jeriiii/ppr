@@ -11,6 +11,7 @@ public:
 private:
 	void calVectors();
 	void calMutationVectors();
+	int countIndividuals;
 	/**
 	Vytvoøí první evoluci
 	*/

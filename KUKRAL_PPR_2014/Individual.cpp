@@ -3,7 +3,8 @@
 #include "RandomNumber.h"
 
 
-Individual::Individual(int countMeasuredVal)
+
+Individual::Individual(int countMeasuredVal, MeasuredVal ** measuredVals)
 {
 	createParams();
 	Individual::countMeasuredVal = countMeasuredVal;

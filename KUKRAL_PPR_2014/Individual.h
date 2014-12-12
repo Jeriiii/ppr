@@ -1,8 +1,10 @@
+#include "MeasuredVal.h";
 #pragma once
 class Individual
 {
+
 public:
-	Individual(int countMeasuredVal);
+	Individual(int countMeasuredVal, MeasuredVal ** measuredVals);
 	~Individual();
 	int cal();
 private:
@@ -12,16 +14,8 @@ public:
 	void init();
 	char *test;
 private:
-	/* namìøená hodnota */
-	struct MeasuredVal
-	{
-		double b; //krev
-		double i; //ist
-		double t; //èas
-	};
 	int countMeasuredVal;
 	/* pole struktur namìøených hodnot */
 	MeasuredVal **measuredVals;
-	
 };
 

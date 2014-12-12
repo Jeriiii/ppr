@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Evolution.h"
-
+#include "MeasuredCreator.h"
 
 Evolution::Evolution()
 {
@@ -10,7 +10,7 @@ Evolution::Evolution()
 
 Evolution::~Evolution()
 {
-	for (size_t i = 0; i < COUNT_INDIVIDUALS; i++)
+	for (size_t i = 0; i < countIndividuals; i++)
 	{
 		delete individuals[i];
 	}
@@ -47,8 +47,11 @@ double Evolution::getBestFit()
 int Evolution::createFirstGen()
 {
 	Individual * ind;
-	individuals = new Individual*[COUNT_INDIVIDUALS];
-	for (size_t i = 0; i < COUNT_INDIVIDUALS; i++)
+
+
+
+	individuals = new Individual*[countIndividuals];
+	for (size_t i = 0; i < countIndividuals; i++)
 	{
 		ind = new Individual(10);
 		individuals[i] = ind;
