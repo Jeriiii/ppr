@@ -82,7 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bounds.h" />
-    <ClInclude Include="Database.h" />
     <ClInclude Include="DifferentialEvolution.h" />
     <ClInclude Include="Evolution.h" />
     <ClInclude Include="MeasuredCreator.h" />
@@ -97,13 +96,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Database.cpp" />
     <ClCompile Include="DifferentialEvolution.cpp" />
     <ClCompile Include="Evolution.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="KUKRAL_PPR_2014.cpp" />
     <ClCompile Include="libs\cpp-sqlite\CppSQLite3.cpp" />
-    <ClCompile Include="libs\mtrand\mtrand.cpp" />
     <ClCompile Include="MeasuredCreator.cpp" />
     <ClCompile Include="PatientMeasuredVals.cpp" />
     <ClCompile Include="RandomNumber.cpp" />
