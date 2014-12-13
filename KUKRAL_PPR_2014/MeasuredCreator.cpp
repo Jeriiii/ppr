@@ -6,7 +6,6 @@
 #include <sqlite3.h>
 #include <iostream>
 #include <string.h>
-#include <vector>
 
 /**
 * Tøída zajišující nyètení namìøenıch hodnot z databáze a uloení do struktury
@@ -74,8 +73,10 @@ PatientMeasuredVals ** MeasuredCreator::createMeasredVal()
 /* Vrátí pacientovo namìøené hodnoty */
 PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patientNumber, const char *patientId)
 {
-	int i, measuredValCount;
-	
+	int k, measuredValCount;
+	std::vector<double> tbVec, tiVec, bVec, iVec;
+	double b, i, t;
+
 	MeasuredVal * measuredVal;
 	PatientMeasuredVals * patientMeasuredVals;
 	CppSQLite3Query measuredValDb;
@@ -85,36 +86,69 @@ PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patient
 	measuredValCount = countMeasuredValByPatient(db, patientId);
 
 	patientMeasuredVals = new PatientMeasuredVals(measuredValCount);
-	for (i = 0; !measuredValDb.eof(); i++)
+
+	/* naète namìøené hodnoty */
+	for (k = 0; !measuredValDb.eof(); k++)
 	{
 		measuredVal = new MeasuredVal();
-		measuredVal->t = atof(measuredValDb.fieldValue(0));
+		t = atof(measuredValDb.fieldValue(0));
+		measuredVal->t = t;
+
+		/* pokud je namìøena krev, uloí ji */
 		if (! measuredValDb.fieldIsNull(1)) {
-			measuredVal->b = atof(measuredValDb.fieldValue(1));
+			b = atof(measuredValDb.fieldValue(1));
+			measuredVal->b = b;
+
+			tbVec.push_back(t);
+			bVec.push_back(b);
 		}
+
+		/* pokud je namìøena its, uloí ji */
 		if (!measuredValDb.fieldIsNull(2)) {
-			measuredVal->i = atof(measuredValDb.fieldValue(2));
+			i = atof(measuredValDb.fieldValue(2));
+			measuredVal->i = i;
+
+			tiVec.push_back(t);
+			iVec.push_back(i);
 		}
 
-		//std::vector<double> X(5), Y(5);
-		//X[0] = 0.1; X[1] = 0.4; X[2] = 1.2; X[3] = 1.8; X[4] = 2.0;
-		//Y[0] = 0.1; Y[1] = 0.7; Y[2] = 0.6; Y[3] = 1.1; Y[4] = 0.9;
-
-		//tk::spline s;
-		//s.set_points(X, Y);    // currently it is required that X is already sorted
-
-		//double x = 1.5;
-
-		//printf("spline at %f is %f\n", x, s(x));
-
-		patientMeasuredVals->setMeasuredVal(measuredVal, i);
+		patientMeasuredVals->setMeasuredVal(measuredVal, k);
 		measuredValDb.nextRow();
 	}
+
+	patientMeasuredVals = recalculateBloodIst(tbVec, bVec, tiVec, iVec, patientMeasuredVals, k);
 	
 	return patientMeasuredVals;
 }
 
+/* dopoèítá nevyplnìné poloky krve a ist */
+PatientMeasuredVals * MeasuredCreator::recalculateBloodIst(dvector tbVec, dvector bVec, dvector tiVec, dvector iVec, PatientMeasuredVals * pmv, int k) {
+	int j;
+	MeasuredVal * measuredVal;
+	
+	/* uloí vektory pro pozdìjší dopoèítávání */
+	tk::spline iFnc, bFnc;
+	bFnc.set_points(tbVec, bVec);
+	iFnc.set_points(tiVec, iVec);
 
+	/* dopoèítá nevyplnìné hodnoty */
+	for (j = 0; j<k; j++)
+	{
+		measuredVal = pmv->getMeasuredVal(j);
+		if (measuredVal->b == 0.0) {
+			/* dopoèítá hodnotu b */
+			measuredVal->b = bFnc(measuredVal->t);
+		}
+
+		if (measuredVal->i == 0.0) {
+			/* dopoèítá hodnotu b */
+			measuredVal->i = bFnc(measuredVal->t);
+		}
+
+	}
+
+	return pmv;
+}
 
 /* poèet všech hodnot jednoho pacienta */
 int MeasuredCreator::countMeasuredValByPatient(CppSQLite3DB * db, const char * patientId)

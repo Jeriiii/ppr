@@ -13,17 +13,12 @@ static void dbTest(); //dekladace fce
 int _tmain(int argc, _TCHAR* argv[])
 {
 	DifferentialEvolution * df;
-	
-	/*RandomNumber * r;
-	r = new RandomNumber();
-	r->generate();
-	delete(r);*/
 
 	df = new DifferentialEvolution();
 	df->start();
 	delete(df);
 
-	printf("Pro ukonèení programu stisknìte libovolnou klávesu.");
+	std::cout << "Pro ukonèení programu stisknìte libovolnou klávesu.";
 	getchar();
 	return 0;
 }

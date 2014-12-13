@@ -1,6 +1,7 @@
+#pragma once
+
 #include "Individual.h"
 #include "Bounds.h"
-#pragma once
 
 #define INI_SECTION_NAME "Bounds"
 

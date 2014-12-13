@@ -1,10 +1,13 @@
-#include "MeasuredVal.h"
 #pragma once
+
+#include "MeasuredVal.h"
+#include "Bounds.h"
+
 class Individual
 {
 
 public:
-	Individual(int countMeasuredVal, MeasuredVal ** measuredVals);
+	Individual(int countMeasuredVal, MeasuredVal ** measuredVals, Bounds * bounds);
 	~Individual();
 	int cal();
 private:

@@ -18,10 +18,16 @@ PatientMeasuredVals::~PatientMeasuredVals()
 {
 }
 
-/* pøidá k pacientovi další namìøené hodnoty */
+/* Nastaví jedno mìøení pacientovi */
 void PatientMeasuredVals::setMeasuredVal(MeasuredVal * patientMeasuredVal, int patientNumber)
 {
 	measuredVals[patientNumber] = patientMeasuredVal;
+}
+
+/* Vrátí jedno mìøení pacienta */
+MeasuredVal * PatientMeasuredVals::getMeasuredVal(int patientNumber)
+{
+	return measuredVals[patientNumber];
 }
 
 

@@ -67,7 +67,7 @@ int Evolution::createFirstGen()
 	for (size_t i = 0; i < countIndividuals; i++)
 	{
 		patient = patients[i];
-		ind = new Individual(patient->countMeasuredVals(), patient->getMeasuredVals());
+		ind = new Individual(patient->countMeasuredVals(), patient->getMeasuredVals(), bounds);
 		delete patient;
 		individuals[i] = ind;
 	}

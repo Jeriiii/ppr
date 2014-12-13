@@ -4,7 +4,7 @@
 
 
 
-Individual::Individual(int countMeasuredVal, MeasuredVal ** measuredVals)
+Individual::Individual(int countMeasuredVal, MeasuredVal ** measuredVals, Bounds bounds)
 {
 	createParams();
 	Individual::countMeasuredVal = countMeasuredVal;
