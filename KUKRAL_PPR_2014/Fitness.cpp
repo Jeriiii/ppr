@@ -3,16 +3,21 @@
 #include <algorithm>
 
 
-Fitness::Fitness(MeasuredVal ** MeasuredVals, int countMeasuredVals)
+Fitness::Fitness()
 {
-	Fitness::MeasuredVals = MeasuredVals;
-	Fitness::countMeasuredVals = countMeasuredVals;
+	Fitness::MeasuredVals = NULL;
+	Fitness::countMeasuredVals = 0;
 
 }
 
 
 Fitness::~Fitness()
 {
+}
+
+void Fitness::setMeasuredVals(MeasuredVal ** MeasuredVals, int countMeasuredVals) {
+	Fitness::MeasuredVals = MeasuredVals;
+	Fitness::countMeasuredVals = countMeasuredVals;
 }
 
 /* vytvoøí aproximaci pro ist v libovolném èase */
@@ -38,12 +43,16 @@ double Fitness::getIst(double t) {
 }
 
 /* spoèítá fitness fce pro všechny mìøení a vrátí jejich medián */
-int Fitness::getMedian(Params * params)
+double Fitness::getMedian(Params * params)
 {
 	int i;
 	dvector fitness;
 	double fitnessMedian;
 	std::vector<double>::iterator begin, middle, end;
+
+	if (MeasuredVals == NULL) {
+		throw "You must call setMeasuredVals method firts";
+	}
 
 	for (i = 0; i < countMeasuredVals; i++) {
 		fitness.push_back(getFitness(params, MeasuredVals[i]));
@@ -61,7 +70,7 @@ int Fitness::getMedian(Params * params)
 }
 
 /* Vrátí fitness fci jednoho mìøení */
-int Fitness::getFitness(Params * p, MeasuredVal * MeasuredVal) {
+double Fitness::getFitness(Params * p, MeasuredVal * MeasuredVal) {
 	double i = MeasuredVal->i, t = MeasuredVal->t, b = MeasuredVal->b;
 	double fn1, fn2, fn3, fn4, fn5r, fn5l;
 	double fitness;

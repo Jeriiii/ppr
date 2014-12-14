@@ -164,8 +164,8 @@ namespace {
 			for (int i = 0; i<this->dim(); i++) {
 				assert(this->operator()(i, i) != 0.0);
 				this->saved_diag(i) = 1.0 / this->operator()(i, i);
-				j_min = std::max(0, i - this->num_lower());
-				j_max = std::min(this->dim() - 1, i + this->num_upper());
+				j_min = (std::max)(0, i - this->num_lower());
+				j_max = (std::min)(this->dim() - 1, i + this->num_upper());
 				for (int j = j_min; j <= j_max; j++) {
 					this->operator()(i, j) *= this->saved_diag(i);
 				}
@@ -174,12 +174,12 @@ namespace {
 
 			// Gauss LR-Decomposition
 			for (int k = 0; k<this->dim(); k++) {
-				i_max = std::min(this->dim() - 1, k + this->num_lower());  // num_lower not a mistake!
+				i_max = (std::min)(this->dim() - 1, k + this->num_lower());  // num_lower not a mistake!
 				for (int i = k + 1; i <= i_max; i++) {
 					assert(this->operator()(k, k) != 0.0);
 					x = -this->operator()(i, k) / this->operator()(k, k);
 					this->operator()(i, k) = -x;                         // assembly part of L
-					j_max = std::min(this->dim() - 1, k + this->num_upper());
+					j_max = (std::min)(this->dim() - 1, k + this->num_upper());
 					for (int j = k + 1; j <= j_max; j++) {
 						// assembly part of R
 						this->operator()(i, j) = this->operator()(i, j) + x*this->operator()(k, j);
@@ -195,7 +195,7 @@ namespace {
 			double sum;
 			for (int i = 0; i<this->dim(); i++) {
 				sum = 0;
-				j_start = std::max(0, i - this->num_lower());
+				j_start = (std::max)(0, i - this->num_lower());
 				for (int j = j_start; j<i; j++) sum += this->operator()(i, j)*x[j];
 				x[i] = (b[i] * this->saved_diag(i)) - sum;
 			}
@@ -209,7 +209,7 @@ namespace {
 			double sum;
 			for (int i = this->dim() - 1; i >= 0; i--) {
 				sum = 0;
-				j_stop = std::min(this->dim() - 1, i + this->num_upper());
+				j_stop = (std::min)(this->dim() - 1, i + this->num_upper());
 				for (int j = i + 1; j <= j_stop; j++) sum += this->operator()(i, j)*x[j];
 				x[i] = (b[i] - sum) / this->operator()(i, i);
 			}
@@ -301,7 +301,7 @@ namespace {
 			// find the closest point m_x[idx] < x, idx=0 even if x<m_x[0]
 			std::vector<double>::const_iterator it;
 			it = std::lower_bound(m_x.begin(), m_x.end(), x);
-			int idx = std::max(int(it - m_x.begin()) - 1, 0);
+			int idx = (std::max)(int(it - m_x.begin()) - 1, 0);
 
 			double h = x - m_x[idx];
 			double interpol;

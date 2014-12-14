@@ -2,8 +2,11 @@
 
 #include "Individual.h"
 #include "Bounds.h"
+#include "RandomNumber.h"
 
 #define INI_SECTION_NAME "Bounds"
+#define F 1 //mutaèní konstanta mezi 0 a 2
+#define CR 0.5 //práh køížení mezi 0 a 1
 
 class Evolution
 {
@@ -11,24 +14,23 @@ public:
 	Evolution();
 	~Evolution();
 private:
-	void calVectors();
-	void calMutationVectors();
+	void calVectors(Params ** mutationVectors);
 	int countIndividuals;
-	/**
-	Vytvoøí první evoluci
-	*/
-	int createFirstGen();
 	Individual ** individuals;
-	Individual ** mutationVectors;
 	Bounds * bounds;
 	Individual * bestIndividual;
-	void createNew();
 	double calBestFit();
+	void createNew();
+	void createFirstGen();
+	Params ** createMutationVectors();
+	Params * createMutationParams(Params * p1, Params *p2, Params *p3);
+	Params ** createTryVectors(Params ** mutationVectors);
+	double getMutationParam(double p1, double p2, double p3, double max, double min);
+	RandomNumber * r;
 public:
 	double getBestFit();
-	/** Probere všechny jedince a vybere toho s nejlepší fitnes fcí */
 	double startNew();
-	Individual * Evolution::getBestIndividual();
+	Individual * getBestIndividual();
 private:
 	void loadBounds();
 };

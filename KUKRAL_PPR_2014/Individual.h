@@ -11,10 +11,17 @@ public:
 	Individual(int countMeasuredVal, MeasuredVal ** measuredVals, Bounds * bounds);
 	~Individual();
 	int cal();
+	Params * getParams();
+	int getCountMeasuredVal();
+	MeasuredVal ** getMeasuredVals();
+	void setParams(Params * params);
+	void setFitness(double fitness);
+	double getFitness();
 private:
 	Params * generateParams();
-	double * params;
+	Params * params;
 	Bounds * bounds;
+	double fitness;
 public:
 	void init();
 	char *test;

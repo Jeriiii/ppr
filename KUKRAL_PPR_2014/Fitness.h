@@ -8,15 +8,16 @@
 class Fitness
 {
 public:
-	Fitness(MeasuredVal ** measuredVals, int countMeasuredVals);
+	Fitness();
 	~Fitness();
-	int getMedian(Params * params);
+	double getMedian(Params * params);
 	int countMeasuredVals;
+	void setMeasuredVals(MeasuredVal ** MeasuredVals, int countMeasuredVals);
 private:
 	
 	tk::spline istAproximation;
 	MeasuredVal ** MeasuredVals;
-	int getFitness(Params * params, MeasuredVal * MeasuredVal);
+	double getFitness(Params * params, MeasuredVal * MeasuredVal);
 	void calIstAproximation();
 	double getIst(double t);
 };

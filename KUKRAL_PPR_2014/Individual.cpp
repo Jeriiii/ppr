@@ -12,20 +12,48 @@ Individual::Individual(int countMeasuredVal, MeasuredVal ** measuredVals, Bounds
 	Individual::bounds = bounds;
 	Individual::countMeasuredVal = countMeasuredVal;
 	Individual::measuredVals = measuredVals;
-	generateParams();
+	params = generateParams();
 }
 
 
 Individual::~Individual()
 {
 	delete[] measuredVals;
-	delete[] params;
+	delete params;
 }
 
 
 int Individual::cal()
 {
 	return 0;
+}
+
+/* vrátí právì používané parametry */
+Params * Individual::getParams() {
+	return params;
+}
+
+/* nastaví jedinci nové parametry */
+void Individual::setParams(Params * params) {
+	Individual::params = params;
+}
+
+void Individual::setFitness(double fitness) {
+	Individual::fitness = fitness;
+}
+
+double Individual::getFitness() {
+	return fitness;
+}
+
+/* vrátí poèet namìøených hodnot */
+int Individual::getCountMeasuredVal() {
+	return countMeasuredVal;
+}
+
+/* vrátí namìøené hodnoty */
+MeasuredVal ** Individual::getMeasuredVals() {
+	return measuredVals;
 }
 
 /* vygeneruje zcela nové parametry */
