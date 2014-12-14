@@ -2,6 +2,7 @@
 
 #include "MeasuredVal.h"
 #include "Bounds.h"
+#include "Params.h"
 
 class Individual
 {
@@ -11,8 +12,9 @@ public:
 	~Individual();
 	int cal();
 private:
-	int createParams();
+	Params * generateParams();
 	double * params;
+	Bounds * bounds;
 public:
 	void init();
 	char *test;

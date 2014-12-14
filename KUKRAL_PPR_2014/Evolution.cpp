@@ -15,7 +15,8 @@ Evolution::Evolution()
 
 Evolution::~Evolution()
 {
-	for (size_t i = 0; i < countIndividuals; i++)
+	int i;
+	for (i = 0; i < countIndividuals; i++)
 	{
 		delete individuals[i];
 	}
@@ -40,7 +41,8 @@ void Evolution::createNew()
 	calVectors();
 }
 
-double Evolution::getBestFit()
+/* zaènì nevou evoluci a vrátí nejlepší fitness fci */
+double Evolution::startNew()
 {
 	double bestFit;
 	
@@ -48,14 +50,21 @@ double Evolution::getBestFit()
 	return bestFit;
 }
 
+/* Vrátí nejlepšího jedince z této evoluce */
+Individual * Evolution::getBestIndividual() {
+	return bestIndividual;
+}
 
+/* vytvoøí jedince kterým se vygenerují poèáteèní parametry a pøiøadí se jim namìøené hodnoty */
 int Evolution::createFirstGen()
 {
 	Individual * ind;
 	MeasuredCreator * mc;
 	PatientMeasuredVals ** patients;
 	PatientMeasuredVals * patient;
+	int i;
 
+	/* naète namìøené hodnoty z db a dopoèítá chybìjící */
 	mc = new MeasuredCreator();
 
 	countIndividuals = mc->getCountPatients();
@@ -63,16 +72,15 @@ int Evolution::createFirstGen()
 
 	delete mc;
 
+	/* vytvoøí jedince a pøiøadí jim namìøené hodnoty */
 	individuals = new Individual*[countIndividuals];
-	for (size_t i = 0; i < countIndividuals; i++)
+	for (i = 0; i < countIndividuals; i++)
 	{
 		patient = patients[i];
 		ind = new Individual(patient->countMeasuredVals(), patient->getMeasuredVals(), bounds);
 		delete patient;
 		individuals[i] = ind;
 	}
-
-	individuals[32]->cal();
 
 	return 0;
 }

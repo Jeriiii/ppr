@@ -3,9 +3,7 @@
 #include "MeasuredVal.h"
 #include "libs/cpp-sqlite/CppSQLite3.h"
 #include "PatientMeasuredVals.h"
-#include <vector>
-
-typedef std::vector<double> dvector; //kratší zápis vektoru
+#include "vector.h"
 
 class MeasuredCreator
 {

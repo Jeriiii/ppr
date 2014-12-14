@@ -84,20 +84,24 @@
     <ClInclude Include="Bounds.h" />
     <ClInclude Include="DifferentialEvolution.h" />
     <ClInclude Include="Evolution.h" />
+    <ClInclude Include="Fitness.h" />
     <ClInclude Include="MeasuredCreator.h" />
     <ClInclude Include="MeasuredVal.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="libs\cpp-sqlite\CppSQLite3.h" />
     <ClInclude Include="libs\simpleini-master\SimpleIni.h" />
+    <ClInclude Include="Params.h" />
     <ClInclude Include="PatientMeasuredVals.h" />
     <ClInclude Include="RandomNumber.h" />
     <ClInclude Include="spline.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DifferentialEvolution.cpp" />
     <ClCompile Include="Evolution.cpp" />
+    <ClCompile Include="Fitness.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="KUKRAL_PPR_2014.cpp" />
     <ClCompile Include="libs\cpp-sqlite\CppSQLite3.cpp" />

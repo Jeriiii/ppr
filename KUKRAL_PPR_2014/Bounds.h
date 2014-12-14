@@ -1,5 +1,5 @@
 #pragma once
-/* namìøená hodnota */
+/* meze hodnot */
 struct Bounds
 {
 	double pmin;

@@ -21,11 +21,14 @@ private:
 	Individual ** individuals;
 	Individual ** mutationVectors;
 	Bounds * bounds;
+	Individual * bestIndividual;
+	void createNew();
+	double calBestFit();
 public:
 	double getBestFit();
 	/** Probere všechny jedince a vybere toho s nejlepší fitnes fcí */
-	double calBestFit();
-	void createNew();
+	double startNew();
+	Individual * Evolution::getBestIndividual();
 private:
 	void loadBounds();
 };
