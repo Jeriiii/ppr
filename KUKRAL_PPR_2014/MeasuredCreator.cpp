@@ -5,9 +5,9 @@
 #include <sqlite3.h>
 #include <iostream>
 #include <string.h>
-#include <QApplication> // Qt includes
-#include <QPushButton>
-#include <QLabel>
+//#include <QApplication> // Qt includes
+//#include <QPushButton>
+//#include <QLabel>
 
 /**
 * Tøída zajišující nyètení namìøenıch hodnot z databáze a uloení do struktury
@@ -59,6 +59,7 @@ PatientMeasuredVals ** MeasuredCreator::createMeasredVal()
 			patientsMeasured[i] = getPatient(&db, i, patientId);
 			patients.nextRow();
 		}
+		std::cout << countPatients;
 
 		patients.finalize();
 		//clouse db se zavola automaticky v destruktoru
@@ -78,6 +79,7 @@ PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patient
 	int k, measuredValCount;
 	std::vector<double> tbVec, tiVec, bVec, iVec;
 	double b, i, t;
+	const char * date;
 
 	MeasuredVal * measuredVal;
 	PatientMeasuredVals * patientMeasuredVals;
@@ -93,7 +95,8 @@ PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patient
 	for (k = 0; !measuredValDb.eof(); k++)
 	{
 		measuredVal = new MeasuredVal();
-		t = atof(measuredValDb.fieldValue(0));
+		date = measuredValDb.fieldValue(0);
+		t = atof(date);
 		measuredVal->t = t;
 
 		/* pokud je namìøena krev, uloí ji */
@@ -173,11 +176,11 @@ CppSQLite3Query MeasuredCreator::getMeasuredValByPatient(CppSQLite3DB * db, cons
 }
 
 /* pøevod èasu do jiného formátu */
-double QDateTime2RatTime(const QDateTime *qdt) {
-	const qint64 diffFrom1970To1900 = 2209161600000;
-	const double MSecsPerDay = 24.0*60.0*60.0*1000.0;
-	const double InvMSecsPerDay = 1.0 / MSecsPerDay;
-
-	qint64 diff = qdt->toMSecsSinceEpoch() + diffFrom1970To1900;
-	return ((double)diff)*InvMSecsPerDay;
-}
+//double QDateTime2RatTime(const QDateTime *qdt) {
+//	const qint64 diffFrom1970To1900 = 2209161600000;
+//	const double MSecsPerDay = 24.0*60.0*60.0*1000.0;
+//	const double InvMSecsPerDay = 1.0 / MSecsPerDay;
+//
+//	qint64 diff = qdt->toMSecsSinceEpoch() + diffFrom1970To1900;
+//	return ((double)diff)*InvMSecsPerDay;
+//}

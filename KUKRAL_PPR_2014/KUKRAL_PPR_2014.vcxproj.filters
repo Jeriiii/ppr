@@ -19,9 +19,6 @@
     <Filter Include="Header Files\external">
       <UniqueIdentifier>{235c1bf9-b268-4be3-8b82-9a54d9757a34}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\external\qt">
-      <UniqueIdentifier>{37acf6e0-40da-4c3e-bc56-7fcceb936e4c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -75,162 +72,6 @@
     <ClInclude Include="vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="libs\qtools\qarray.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qasciidict.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qbuffer.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qcache.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qcollection.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qconfig.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qcstring.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qdatastream.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qdatetime.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qdict.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qdir.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qfeatures.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qfile.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qfiledefs_p.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qfileinfo.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qgarray.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qgcache.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qgdict.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qgeneric.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qglist.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qglobal.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qgstring.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qgvector.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qintdict.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qinternallist.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qiodevice.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qlist.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qmap.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qmodules.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qmutex.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qmutex_p.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qptrdict.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qqueue.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qregexp.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qshared.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qsortedlist.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qstack.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qstring.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qstringlist.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qstrlist.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qstrvec.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qtextcodec.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qtextstream.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qthread.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qthread_p.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qtl.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qutfcodec.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qvaluelist.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qvaluestack.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qvector.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qwaitcondition.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\qtools\qxml.h">
-      <Filter>Header Files\external\qt</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -263,9 +104,6 @@
     <ClCompile Include="Fitness.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="libs\qtools\qdatetime.cpp">
-      <Filter>Header Files\external\qt</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -274,9 +112,6 @@
     </None>
     <None Include="bounds.ini">
       <Filter>Resource Files</Filter>
-    </None>
-    <None Include="libs\qtools\qtools.pro.in">
-      <Filter>Header Files\external\qt</Filter>
     </None>
   </ItemGroup>
 </Project>
