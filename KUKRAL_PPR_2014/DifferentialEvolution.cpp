@@ -27,6 +27,8 @@ int DifferentialEvolution::start()
 	MeasuredCreator * mc;
 	PatientMeasuredVals ** patients;
 	PatientMeasuredVals * patient;
+	/* nejlepší jedinec */
+	Individual * bestIndividual;
 
 	struct tm newtime;
 	__time32_t aclock;
@@ -52,10 +54,11 @@ int DifferentialEvolution::start()
 		for (i = 0; true; i++) {
 			bestFit = evo->startNew(i * 100);
 			if (bestFit < endFit) {
+				bestIndividual = evo->getBestIndividual();
 				printf("%f bestFit \n", bestFit);
 				break;
 			}
-			if (i % 20 == 0) {
+			if (i % 40 == 0) {
 				
 				_time32(&aclock);   // Get time in seconds.
 				_localtime32_s(&newtime, &aclock);   // Convert time to struct tm form.
@@ -72,9 +75,6 @@ int DifferentialEvolution::start()
 	}
 
 	std::cout << "bestfit is " << bestFit;
-
-	/* nejlepší jedinec */
-	Individual * bestIndividual = evo->getBestIndividual();
 
 	delete evo;
 	return 0;
