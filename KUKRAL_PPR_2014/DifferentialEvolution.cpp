@@ -3,6 +3,7 @@
 #include "Evolution.h"
 #include "MeasuredCreator.h"
 #include <iostream>
+#include <time.h>
 
 /************************************************************************/
 /* Tøída zajišující kompletní dif. evoluci                             */
@@ -27,6 +28,11 @@ int DifferentialEvolution::start()
 	PatientMeasuredVals ** patients;
 	PatientMeasuredVals * patient;
 
+	struct tm newtime;
+	__time32_t aclock;
+	char buffer[32];
+	errno_t errNum;
+
 	evo = new Evolution();
 
 	/* naète namìøené hodnoty z db a dopoèítá chybìjící */
@@ -46,10 +52,18 @@ int DifferentialEvolution::start()
 		for (i = 0; true; i++) {
 			bestFit = evo->startNew(i * 100);
 			if (bestFit < endFit) {
+				printf("%f bestFit \n", bestFit);
 				break;
 			}
-			if (i % 10 == 0) {
-				printf("krok %d, bestFit %f \n", i / 10, bestFit);
+			if (i % 20 == 0) {
+				
+				_time32(&aclock);   // Get time in seconds.
+				_localtime32_s(&newtime, &aclock);   // Convert time to struct tm form.
+
+				// Print local time as a string.
+
+				errNum = asctime_s(buffer, 32, &newtime);
+				std::cout << "krok" << (i / 20) << ", bestFit " << bestFit << " v case " << buffer << "\n";
 			}
 			i++;
 		}

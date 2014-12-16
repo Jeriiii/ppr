@@ -5,6 +5,7 @@
 #include "RandomNumber.h"
 #include "DifferentialEvolution.h"
 #include <iostream>
+#include <time.h>
 
 static void dbTest(); //dekladace fce
 

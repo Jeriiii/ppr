@@ -23,11 +23,11 @@ private:
 	double calBestFit();
 	void createNew();
 	Params ** createMutationVectors();
-	Params * createMutationParams(Params * p1, Params *p2, Params *p3, int i);
+	Params * createMutationParams(Params * p1, Params *p2, Params *p3);
 	Params ** createTryVectors(Params ** mutationVectors);
-	double getMutationParam(double p1, double p2, double p3, double max, double min, int i);
+	double getMutationParam(double p1, double p2, double p3, double max, double min);
 	RandomNumber * r;
-	double createTryParam(double tryParam, double mutationParam, int i);
+	double createTryParam(double tryParam, double mutationParam);
 public:
 	double getBestFit();
 	double startNew(int i);
