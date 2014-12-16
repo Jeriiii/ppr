@@ -39,7 +39,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <NuGetPackageImportStamp>651d5fa3</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>9f7a8822</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -85,6 +85,7 @@
     <ClInclude Include="DifferentialEvolution.h" />
     <ClInclude Include="Evolution.h" />
     <ClInclude Include="Fitness.h" />
+    <ClInclude Include="libs\cpp-sqlite\sqlite3.h" />
     <ClInclude Include="MeasuredCreator.h" />
     <ClInclude Include="MeasuredVal.h" />
     <ClInclude Include="Individual.h" />

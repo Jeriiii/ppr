@@ -5,5 +5,7 @@ public:
 	DifferentialEvolution();
 	~DifferentialEvolution();
 	int start();
+private:
+	int countPatients;
 };
 

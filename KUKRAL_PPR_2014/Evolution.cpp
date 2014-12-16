@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Evolution.h"
-#include "MeasuredCreator.h"
 #include "libs/simpleini-master/SimpleIni.h"
 #include "Fitness.h"
 #include <iostream>
@@ -12,14 +11,13 @@ Evolution::Evolution()
 	r = new RandomNumber;
 	bestIndividual = NULL;
 	loadBounds();
-	createFirstGen();
 }
 
 
 Evolution::~Evolution()
 {
 	int i;
-	for (i = 0; i < countIndividuals; i++)
+	for (i = 0; i < COUNT_INDIVIDUALS; i++)
 	{
 		delete individuals[i];
 	}
@@ -39,11 +37,10 @@ void Evolution::calVectors(Params ** mutationVectors)
 
 	tryVectors = createTryVectors(mutationVectors);
 
-	for (i = 0; i < countIndividuals; i++)
+	for (i = 0; i < COUNT_INDIVIDUALS; i++)
 	{
 		oldIndividual = individuals[i];
 		tryParams = tryVectors[i];
-		fit = new Fitness();
 
 		/* vypoèítá fitness fci zkušebního jedince */
 		fit->setMeasuredVals(oldIndividual->getMeasuredVals(), oldIndividual->getCountMeasuredVal());
@@ -54,7 +51,8 @@ void Evolution::calVectors(Params ** mutationVectors)
 			oldIndividual->setFitness(tryFitness);
 			oldIndividual->setParams(tryParams);
 		}
-		
+
+		delete tryParams;
 	}
 
 	delete fit;
@@ -65,66 +63,49 @@ Params ** Evolution::createTryVectors(Params ** mutationVectors) {
 	int i;
 	Params * tryParams; //parametry zkušebního jedince
 	Params ** tryVectors; //parametry zkušebních jedincù
-	Params * mutationParams; //mutaèní vektor
+	Params * mutationParams, *oldParams; //mutaèní vektor
 	Individual * oldIndividual; //jedinec ze staré generace
 
-	tryVectors = new Params *[countIndividuals];
-	for (i = 0; i < countIndividuals; i++)
+	tryVectors = new Params *[COUNT_INDIVIDUALS];
+	for (i = 0; i < COUNT_INDIVIDUALS; i++)
 	{
 		oldIndividual = individuals[i];
-		tryParams = oldIndividual->getParams();
+		tryParams = new Params; 
+		oldParams = oldIndividual->getParams();
+
 		mutationParams = mutationVectors[i];
 
 		/* parametry p, cg, c */
-		if (CR > r->generate(0, 1)) {
-			tryParams->p = mutationParams->p;
-		}
-
-		if (CR > r->generate(0, 1)) {
-			tryParams->cg = mutationParams->cg;
-		}
-
-		if (CR > r->generate(0, 1)) {
-			tryParams->c = mutationParams->c;
-		}
+		tryParams->p = createTryParam(oldParams->p, mutationParams->p, i + 1);
+		tryParams->cg = createTryParam(oldParams->cg, mutationParams->cg, i + 2);
+		tryParams->c = createTryParam(oldParams->c, mutationParams->c, i + 3);
 
 		/* parametry pp, cgp, cp */
-		if (CR > r->generate(0, 1)) {
-			tryParams->pp = mutationParams->pp;
-		}
-
-		if (CR > r->generate(0, 1)) {
-			tryParams->cgp = mutationParams->cgp;
-		}
-
-		if (CR > r->generate(0, 1)) {
-			tryParams->cp = mutationParams->cp;
-		}
+		tryParams->pp = createTryParam(oldParams->pp, mutationParams->pp, i + 4);
+		tryParams->cgp = createTryParam(oldParams->cgp, mutationParams->cgp, i + 5);
+		tryParams->cp = createTryParam(oldParams->cp, mutationParams->cp, i + 6);
 
 		/* parametry dt, h */
-		if (CR > r->generate(0, 1)) {
-			tryParams->dt = mutationParams->dt;
-		}
-
-		if (CR > r->generate(0, 1)) {
-			tryParams->h = mutationParams->h;
-		}
+		tryParams->dt = createTryParam(oldParams->dt, mutationParams->dt, i + 7);
+		tryParams->h = createTryParam(oldParams->h, mutationParams->h, i + 8);
 		/* paramerty k, m, n */
-		if (CR > r->generate(0, 1)) {
-			tryParams->k = mutationParams->k;
-		}
+		tryParams->k = createTryParam(oldParams->k, mutationParams->k, i + 9);
+		tryParams->m = createTryParam(oldParams->m, mutationParams->m, i + 10);
+		tryParams->n = createTryParam(oldParams->n, mutationParams->n, i + 11);
 
-		if (CR > r->generate(0, 1)) {
-			tryParams->m = mutationParams->m;
-		}
-
-		if (CR > r->generate(0, 1)) {
-			tryParams->n = mutationParams->n;
-		}
 		tryVectors[i] = tryParams;
 	}
 
 	return tryVectors;
+}
+
+double Evolution::createTryParam(double oldParam, double mutationParam, int i) {
+	if (CR > r->generate(0, 1, i)) {
+		return mutationParam;
+	}
+	else {
+		return oldParam;
+	}
 }
 
 /* vytvoøí mutaèní vektory */
@@ -136,12 +117,12 @@ Params ** Evolution::createMutationVectors()
 	Params ** mutationVectors;
 	
 
-	mutationVectors = new Params*[countIndividuals];
-	for (i = 0; i < countIndividuals; i++)
+	mutationVectors = new Params*[COUNT_INDIVIDUALS];
+	for (i = 0; i < COUNT_INDIVIDUALS; i++)
 	{
-		r1 = r->generateInt(0, countIndividuals - 1);
-		r2 = r->generateInt(0, countIndividuals - 1);
-		r3 = r->generateInt(0, countIndividuals - 1);
+		r1 = r->generateInt(0, COUNT_INDIVIDUALS - 1, i + 1);
+		r2 = r->generateInt(0, COUNT_INDIVIDUALS - 1, i + 2);
+		r3 = r->generateInt(0, COUNT_INDIVIDUALS - 1, i + 3);
 
 		i1 = individuals[r1];
 		i2 = individuals[r2];
@@ -151,7 +132,7 @@ Params ** Evolution::createMutationVectors()
 		p2 = i2->getParams();
 		p3 = i3->getParams();
 
-		mutationParams = createMutationParams(p1, p2, p3);
+		mutationParams = createMutationParams(p1, p2, p3, i);
 		mutationVectors[i] = mutationParams;
 	}
 
@@ -160,37 +141,37 @@ Params ** Evolution::createMutationVectors()
 }
 
 /* vytvoøí nový mutaèní vektor */
-Params * Evolution::createMutationParams(Params * p1, Params *p2, Params *p3) {
+Params * Evolution::createMutationParams(Params * p1, Params *p2, Params *p3, int i) {
 	Params * mutationParams = new Params();
 
-	mutationParams->p = getMutationParam(p1->p, p2->p, p3->p, bounds->pmin, bounds->pmax);
-	mutationParams->cg = getMutationParam(p1->cg, p2->cg, p3->cg, bounds->cgmin, bounds->cgmax);
-	mutationParams->c = getMutationParam(p1->c, p2->c, p3->c, bounds->cmin, bounds->cmax);
+	mutationParams->p = getMutationParam(p1->p, p2->p, p3->p, bounds->pmin, bounds->pmax, i + 1);
+	mutationParams->cg = getMutationParam(p1->cg, p2->cg, p3->cg, bounds->cgmin, bounds->cgmax, i + 2);
+	mutationParams->c = getMutationParam(p1->c, p2->c, p3->c, bounds->cmin, bounds->cmax, i + 3);
 
-	mutationParams->pp = getMutationParam(p1->pp, p2->pp, p3->pp, bounds->ppmin, bounds->ppmax);
-	mutationParams->cgp = getMutationParam(p1->cgp, p2->cgp, p3->cgp, bounds->cgpmin, bounds->cgpmax);
-	mutationParams->cp = getMutationParam(p1->cp, p2->cp, p3->cp, bounds->cpmin, bounds->cpmax);
+	mutationParams->pp = getMutationParam(p1->pp, p2->pp, p3->pp, bounds->ppmin, bounds->ppmax, i + 4);
+	mutationParams->cgp = getMutationParam(p1->cgp, p2->cgp, p3->cgp, bounds->cgpmin, bounds->cgpmax, i + 5);
+	mutationParams->cp = getMutationParam(p1->cp, p2->cp, p3->cp, bounds->cpmin, bounds->cpmax, i + 6);
 
-	mutationParams->dt = getMutationParam(p1->dt, p2->dt, p3->dt, bounds->dtmin, bounds->dtmax);
-	mutationParams->h = getMutationParam(p1->h, p2->h, p3->h, bounds->hmin, bounds->hmax);
+	mutationParams->dt = getMutationParam(p1->dt, p2->dt, p3->dt, bounds->dtmin, bounds->dtmax, i + 7);
+	mutationParams->h = getMutationParam(p1->h, p2->h, p3->h, bounds->hmin, bounds->hmax, i + 8);
 
-	mutationParams->k = getMutationParam(p1->k, p2->k, p3->k, bounds->kmin, bounds->kmax);
+	mutationParams->k = getMutationParam(p1->k, p2->k, p3->k, bounds->kmin, bounds->kmax, i + 9);
 
-	mutationParams->m = getMutationParam(p1->m, p2->m, p3->m, bounds->mmin, bounds->mmax);
-	mutationParams->n = getMutationParam(p1->n, p2->n, p3->n, bounds->nmin, bounds->nmax);
+	mutationParams->m = getMutationParam(p1->m, p2->m, p3->m, bounds->mmin, bounds->mmax, i + 10);
+	mutationParams->n = getMutationParam(p1->n, p2->n, p3->n, bounds->nmin, bounds->nmax, i + 11);
 
 	return mutationParams;
 }
 
 /* vypoèítá jeden mutaèní parametr */
-double Evolution::getMutationParam(double p1, double p2, double p3, double min, double max) {
+double Evolution::getMutationParam(double p1, double p2, double p3, double min, double max, int i) {
 	double param;
 	
 	param = p1 + F * (p2 - p3);
 
 	/* pokud se dostane za meze */
 	if (param > max || param < min) {
-		param = r->generate(max, min);
+		param = r->generate(min, max, i);
 	}
 
 	return param;
@@ -205,10 +186,11 @@ void Evolution::createNew()
 }
 
 /* zaènì nevou evoluci a vrátí nejlepší fitness fci */
-double Evolution::startNew()
+double Evolution::startNew(int i)
 {
 	double bestFit;
 	
+	r->setSeed(i);
 	createNew();
 	bestFit = calBestFit();
 	return bestFit;
@@ -220,37 +202,23 @@ Individual * Evolution::getBestIndividual() {
 }
 
 /* vytvoøí jedince kterým se vygenerují poèáteèní parametry a pøiøadí se jim namìøené hodnoty */
-void Evolution::createFirstGen()
+void Evolution::createFirstGen(int countMeasuredVals, MeasuredVal ** MeasuredVals)
 {
 	Individual * ind;
-	MeasuredCreator * mc;
-	PatientMeasuredVals ** patients;
-	PatientMeasuredVals * patient;
 	Fitness * fit;
 	int i;
 	double fitness;
 
-	/* naète namìøené hodnoty z db a dopoèítá chybìjící */
-	mc = new MeasuredCreator();
-
-	countIndividuals = mc->getCountPatients();
-	patients = mc->getMeasuredVals();
-
-	delete mc;
-
 	/* vytvoøí jedince a pøiøadí jim namìøené hodnoty */
-	individuals = new Individual*[countIndividuals];
+	individuals = new Individual*[COUNT_INDIVIDUALS];
 	fit = new Fitness;
-	for (i = 0; i < countIndividuals; i++)
+	for (i = 0; i < COUNT_INDIVIDUALS; i++)
 	{
-		patient = patients[i];
-		
-		ind = new Individual(patient->countMeasuredVals(), patient->getMeasuredVals(), bounds);
-		fit->setMeasuredVals(ind->getMeasuredVals(), ind->getCountMeasuredVal());
+		ind = new Individual(countMeasuredVals, MeasuredVals, bounds);
+		fit->setMeasuredVals(MeasuredVals, countMeasuredVals);
 		fitness = fit->getMedian(ind->getParams());
 		ind->setFitness(fitness);
 
-		delete patient;
 		individuals[i] = ind;
 	}
 	delete fit;
@@ -264,7 +232,7 @@ double Evolution::calBestFit()
 	double bestFitness = individuals[0]->getFitness();
 	bestIndividual = individuals[0];
 
-	for (i = 0; i < countIndividuals; i++)
+	for (i = 0; i < COUNT_INDIVIDUALS; i++)
 	{
 		fitness = individuals[i]->getFitness();
 		if (fitness < bestFitness) {

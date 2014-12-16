@@ -243,7 +243,7 @@ namespace {
 			int   n = x.size();
 			// TODO sort x and y, rather than returning an error
 			for (int i = 0; i<n - 1; i++) {
-				assert(m_x[i]<m_x[i + 1]);
+				assert(m_x[i]<=m_x[i + 1]);
 			}
 
 			if (cubic_spline == true) { // cubic spline interpolation

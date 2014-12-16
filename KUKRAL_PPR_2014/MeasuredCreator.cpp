@@ -2,7 +2,7 @@
 #include "MeasuredCreator.h"
 #include "PatientMeasuredVals.h"
 #include "spline.h"
-#include <sqlite3.h>
+//#include <sqlite3.h>
 #include <iostream>
 #include <string.h>
 //#include <QApplication> // Qt includes
@@ -59,7 +59,6 @@ PatientMeasuredVals ** MeasuredCreator::createMeasredVal()
 			patientsMeasured[i] = getPatient(&db, i, patientId);
 			patients.nextRow();
 		}
-		std::cout << countPatients;
 
 		patients.finalize();
 		//clouse db se zavola automaticky v destruktoru
@@ -78,7 +77,7 @@ PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patient
 {
 	int k, measuredValCount;
 	std::vector<double> tbVec, tiVec, bVec, iVec;
-	double b, i, t;
+	double b, i, t, ttest = 0.0;
 	const char * date;
 
 	MeasuredVal * measuredVal;
@@ -96,7 +95,11 @@ PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patient
 	{
 		measuredVal = new MeasuredVal();
 		date = measuredValDb.fieldValue(0);
-		t = atof(date);
+		//t = atof(date);
+		ttest++;
+		t = ttest / 2000.0;
+		assert(t<=1);
+		assert(t != 0);
 		measuredVal->t = t;
 
 		/* pokud je namìøena krev, uloží ji */
@@ -104,6 +107,7 @@ PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patient
 			b = atof(measuredValDb.fieldValue(1));
 			measuredVal->b = b;
 
+			//tbVec.push_back((double)k);
 			tbVec.push_back(t);
 			bVec.push_back(b);
 		}
@@ -133,6 +137,7 @@ PatientMeasuredVals * MeasuredCreator::recalculateBloodIst(dvector tbVec, dvecto
 	
 	/* uloží vektory pro pozdìjší dopoèítávání */
 	tk::spline iFnc, bFnc;
+
 	bFnc.set_points(tbVec, bVec);
 	iFnc.set_points(tiVec, iVec);
 

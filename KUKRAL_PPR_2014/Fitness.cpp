@@ -18,6 +18,7 @@ Fitness::~Fitness()
 void Fitness::setMeasuredVals(MeasuredVal ** MeasuredVals, int countMeasuredVals) {
 	Fitness::MeasuredVals = MeasuredVals;
 	Fitness::countMeasuredVals = countMeasuredVals;
+	calIstAproximation();
 }
 
 /* vytvoøí aproximaci pro ist v libovolném èase */
