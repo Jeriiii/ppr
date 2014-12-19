@@ -43,33 +43,6 @@ double Fitness::getIst(double t) {
 	return istAproximation(t);
 }
 
-/* spoèítá fitness fce pro všechny mìøení a vrátí jejich medián */
-double Fitness::getMedian(Params * params)
-{
-	int i;
-	dvector fitness;
-	double fitnessMedian;
-	std::vector<double>::iterator begin, middle, end;
-
-	if (MeasuredVals == NULL) {
-		throw "You must call setMeasuredVals method firts";
-	}
-
-	for (i = 0; i < countMeasuredVals; i++) {
-		fitness.push_back(getFitness(params, MeasuredVals[i]));
-	}
-
-	/* urèení mediánu pomocí selection algoritmu */
-	begin = fitness.begin();
-	end = fitness.end();
-	middle = begin + (end - begin) / 2;
-
-	std::nth_element(begin, middle, end);
-	fitnessMedian = *middle;
-
-	return fitnessMedian;
-}
-
 /* prùmìrný rozdíl levých a pravých hodnot */
 double Fitness::sumDiff(Params * params) {
 	double sum = 0.0;

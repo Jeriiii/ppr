@@ -10,7 +10,6 @@ class Fitness
 public:
 	Fitness();
 	~Fitness();
-	double getMedian(Params * params);
 	int countMeasuredVals;
 	void setMeasuredVals(MeasuredVal ** MeasuredVals, int countMeasuredVals);
 	double sumDiff(Params * params);
