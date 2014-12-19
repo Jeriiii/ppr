@@ -3,22 +3,17 @@
 #include <algorithm>
 
 
-Fitness::Fitness()
+Fitness::Fitness(MeasuredVal ** MeasuredVals, int countMeasuredVals)
 {
-	Fitness::MeasuredVals = NULL;
-	Fitness::countMeasuredVals = 0;
+	Fitness::MeasuredVals = MeasuredVals;
+	Fitness::countMeasuredVals = countMeasuredVals;
+	calIstAproximation();
 
 }
 
 
 Fitness::~Fitness()
 {
-}
-
-void Fitness::setMeasuredVals(MeasuredVal ** MeasuredVals, int countMeasuredVals) {
-	Fitness::MeasuredVals = MeasuredVals;
-	Fitness::countMeasuredVals = countMeasuredVals;
-	calIstAproximation();
 }
 
 /* vytvoøí aproximaci pro ist v libovolném èase */
@@ -43,20 +38,15 @@ double Fitness::getIst(double t) {
 	return istAproximation(t);
 }
 
+
 /* prùmìrnı rozdíl levıch a pravıch hodnot */
 double Fitness::sumDiff(Params * params) {
 	double sum = 0.0;
-	double sum1 = 0.0, sum2 = 0.0, sum3 = 0.0, sum4 = 0.0;
 	int i;
 	
-	for (i = 0; i < countMeasuredVals; i = i + 4) {
-		sum1 = sum1 + getFitness(params, MeasuredVals[i]);
-		sum2 = sum2 + getFitness(params, MeasuredVals[i]);
-		sum3 = sum3 + getFitness(params, MeasuredVals[i]);
-		sum4 = sum4 + getFitness(params, MeasuredVals[i]);
+	for (i = 0; i < countMeasuredVals; i++) {
+		sum = sum + getFitness(params, MeasuredVals[i]);
 	}
-
-	sum = sum1 + sum2 + sum3 + sum4;
 
 	return sum / countMeasuredVals;
 }

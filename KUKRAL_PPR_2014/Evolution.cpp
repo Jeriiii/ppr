@@ -31,7 +31,7 @@ void Evolution::calVectors(Params ** mutationVectors)
 	int i;
 	Params ** tryVectors; //parametry zkušebních jedincù
 	Params * tryParams; //parametry jednoho zkušeního jedince
-	Fitness * fit = new Fitness();
+	Fitness * fit = new Fitness(individuals[0]->getMeasuredVals(), individuals[0]->getCountMeasuredVal());
 	double tryFitness;
 	Individual * oldIndividual; //jedinec ze staré generace
 
@@ -43,8 +43,6 @@ void Evolution::calVectors(Params ** mutationVectors)
 		tryParams = tryVectors[i];
 
 		/* vypoèítá fitness fci zkušebního jedince */
-		fit->setMeasuredVals(oldIndividual->getMeasuredVals(), oldIndividual->getCountMeasuredVal());
-		//tryFitness = fit->getMedian(tryParams
 		tryFitness = fit->sumDiff(tryParams);
 
 		/* pokud je lepší než staršího jedince, uloží ji */
@@ -212,12 +210,11 @@ void Evolution::createFirstGen(int countMeasuredVals, MeasuredVal ** MeasuredVal
 
 	/* vytvoøí jedince a pøiøadí jim namìøené hodnoty */
 	individuals = new Individual*[COUNT_INDIVIDUALS];
-	fit = new Fitness;
+	fit = new Fitness(MeasuredVals, countMeasuredVals);
 	for (i = 0; i < COUNT_INDIVIDUALS; i++)
 	{
 		ind = new Individual(countMeasuredVals, MeasuredVals, bounds, i);
-		fit->setMeasuredVals(MeasuredVals, countMeasuredVals);
-		fitness = fit->getMedian(ind->getParams());
+		fitness = fit->sumDiff(ind->getParams());
 		ind->setFitness(fitness);
 
 		individuals[i] = ind;

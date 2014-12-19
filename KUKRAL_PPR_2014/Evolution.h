@@ -3,6 +3,7 @@
 #include "Individual.h"
 #include "Bounds.h"
 #include "RandomNumber.h"
+#include "Fitness.h"
 
 #define INI_SECTION_NAME "Bounds"
 #define COUNT_INDIVIDUALS 40
@@ -19,6 +20,7 @@ private:
 	void calVectors(Params ** mutationVectors);
 	Individual ** individuals;
 	Bounds * bounds;
+	Fitness * fit;
 	Individual * bestIndividual;
 	double calBestFit();
 	void createNew();

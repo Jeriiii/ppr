@@ -8,10 +8,9 @@
 class Fitness
 {
 public:
-	Fitness();
+	Fitness(MeasuredVal ** MeasuredVals, int countMeasuredVals);
 	~Fitness();
 	int countMeasuredVals;
-	void setMeasuredVals(MeasuredVal ** MeasuredVals, int countMeasuredVals);
 	double sumDiff(Params * params);
 private:
 	
