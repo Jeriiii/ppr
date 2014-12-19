@@ -7,11 +7,12 @@
 * Jedinec v evoluci
 */
 
-Individual::Individual(int countMeasuredVal, MeasuredVal ** measuredVals, Bounds * bounds)
+Individual::Individual(int countMeasuredVal, MeasuredVal ** measuredVals, Bounds * bounds, int serialNumber)
 {
 	Individual::bounds = bounds;
 	Individual::countMeasuredVal = countMeasuredVal;
 	Individual::measuredVals = measuredVals;
+	Individual::serialNumber = serialNumber;
 	params = generateParams();
 }
 
@@ -35,6 +36,7 @@ Params * Individual::getParams() {
 
 /* nastaví jedinci nové parametry */
 void Individual::setParams(Params * params) {
+	delete Individual::params; //smazání starých parametrù
 	Individual::params = params;
 }
 

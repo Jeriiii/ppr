@@ -19,6 +19,6 @@ private:
 	PatientMeasuredVals * getPatient(CppSQLite3DB * db, int patientNumber, const char * patientId);
 	int countMeasuredValByPatient(CppSQLite3DB * db, const char * patientId);
 	CppSQLite3Query getMeasuredValByPatient(CppSQLite3DB * db, const char * patientId);
-	PatientMeasuredVals * recalculateBloodIst(dvector tbVec, dvector bVec, dvector tiVec, dvector iVec, PatientMeasuredVals * pmv, int k);
+	PatientMeasuredVals * recalculateBloodIst(dvector tiVec, dvector iVec, PatientMeasuredVals * pmv, int k, double lastT);
 };
 

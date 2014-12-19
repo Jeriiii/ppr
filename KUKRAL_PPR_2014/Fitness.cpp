@@ -70,6 +70,24 @@ double Fitness::getMedian(Params * params)
 	return fitnessMedian;
 }
 
+/* prùmìrný rozdíl levých a pravých hodnot */
+double Fitness::sumDiff(Params * params) {
+	double sum = 0.0;
+	double sum1 = 0.0, sum2 = 0.0, sum3 = 0.0, sum4 = 0.0;
+	int i;
+	
+	for (i = 0; i < countMeasuredVals; i = i + 4) {
+		sum1 = sum1 + getFitness(params, MeasuredVals[i]);
+		sum2 = sum2 + getFitness(params, MeasuredVals[i]);
+		sum3 = sum3 + getFitness(params, MeasuredVals[i]);
+		sum4 = sum4 + getFitness(params, MeasuredVals[i]);
+	}
+
+	sum = sum1 + sum2 + sum3 + sum4;
+
+	return sum / countMeasuredVals;
+}
+
 /* Vrátí fitness fci jednoho mìøení */
 double Fitness::getFitness(Params * p, MeasuredVal * MeasuredVal) {
 	double i = MeasuredVal->i, t = MeasuredVal->t, b = MeasuredVal->b;

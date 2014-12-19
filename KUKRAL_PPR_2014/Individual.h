@@ -8,7 +8,7 @@ class Individual
 {
 
 public:
-	Individual(int countMeasuredVal, MeasuredVal ** measuredVals, Bounds * bounds);
+	Individual(int countMeasuredVal, MeasuredVal ** measuredVals, Bounds * bounds, int serialNumber);
 	~Individual();
 	int cal();
 	Params * getParams();
@@ -17,6 +17,7 @@ public:
 	void setParams(Params * params);
 	void setFitness(double fitness);
 	double getFitness();
+	int serialNumber;
 private:
 	Params * generateParams();
 	Params * params;

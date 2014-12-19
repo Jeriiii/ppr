@@ -58,7 +58,7 @@ int DifferentialEvolution::start()
 				printf("%f bestFit \n", bestFit);
 				break;
 			}
-			if (i % 40 == 0) {
+			if (i % 1000 == 0) {
 				
 				_time32(&aclock);   // Get time in seconds.
 				_localtime32_s(&newtime, &aclock);   // Convert time to struct tm form.
@@ -66,7 +66,7 @@ int DifferentialEvolution::start()
 				// Print local time as a string.
 
 				errNum = asctime_s(buffer, 32, &newtime);
-				std::cout << "krok" << (i / 20) << ", bestFit " << bestFit << " v case " << buffer << "\n";
+				std::cout << "krok" << (i / 1000) << ", bestFit " << bestFit << " v case " << buffer << "\n";
 			}
 			i++;
 		}

@@ -13,6 +13,7 @@ public:
 	double getMedian(Params * params);
 	int countMeasuredVals;
 	void setMeasuredVals(MeasuredVal ** MeasuredVals, int countMeasuredVals);
+	double sumDiff(Params * params);
 private:
 	
 	tk::spline istAproximation;

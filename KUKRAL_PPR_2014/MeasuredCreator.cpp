@@ -75,9 +75,9 @@ PatientMeasuredVals ** MeasuredCreator::createMeasredVal()
 /* Vrátí pacientovo namìøené hodnoty */
 PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patientNumber, const char *patientId)
 {
-	int k, measuredValCount;
-	std::vector<double> tbVec, tiVec, bVec, iVec;
-	double b, i, t, ttest = 0.0;
+	int k, measuredValCount, serialNumber = 0;
+	std::vector<double> tiVec, iVec;
+	double b, i, t, lastT = 0.0, ttest = 0.0;
 	const char * date;
 
 	MeasuredVal * measuredVal;
@@ -93,66 +93,69 @@ PatientMeasuredVals * MeasuredCreator::getPatient(CppSQLite3DB * db, int patient
 	/* naète namìøené hodnoty */
 	for (k = 0; !measuredValDb.eof(); k++)
 	{
-		measuredVal = new MeasuredVal();
+		measuredVal = NULL;
 		date = measuredValDb.fieldValue(0);
 		//t = atof(date);
 		ttest++;
 		t = ttest / 2000.0;
-		assert(t<=1);
+		assert(t <= 1);
 		assert(t != 0);
-		measuredVal->t = t;
-
-		/* pokud je namìøena krev, uloží ji */
-		if (! measuredValDb.fieldIsNull(1)) {
-			b = atof(measuredValDb.fieldValue(1));
-			measuredVal->b = b;
-
-			//tbVec.push_back((double)k);
-			tbVec.push_back(t);
-			bVec.push_back(b);
-		}
 
 		/* pokud je namìøena its, uloží ji */
 		if (!measuredValDb.fieldIsNull(2)) {
 			i = atof(measuredValDb.fieldValue(2));
-			measuredVal->i = i;
 
 			tiVec.push_back(t);
 			iVec.push_back(i);
+
+			lastT = t;
 		}
 
-		patientMeasuredVals->setMeasuredVal(measuredVal, k);
+		/* pokud je namìøena b, uloží ji */
+		if (!measuredValDb.fieldIsNull(1)) {
+			measuredVal = new MeasuredVal();
+			measuredVal->t = t;
+
+			b = atof(measuredValDb.fieldValue(1));
+			measuredVal->b = b;
+
+			if (!measuredValDb.fieldIsNull(2)) {
+				measuredVal->i = i;
+			}
+		}		
+
+		/* ukládá jen záznamy s napoèítanou hodnotou krve */
+		if (!measuredValDb.fieldIsNull(1)) {
+			patientMeasuredVals->setMeasuredVal(measuredVal, serialNumber);
+			serialNumber++;
+		}
 		measuredValDb.nextRow();
 	}
 
-	patientMeasuredVals = recalculateBloodIst(tbVec, bVec, tiVec, iVec, patientMeasuredVals, k);
+
+	patientMeasuredVals = recalculateBloodIst(tiVec, iVec, patientMeasuredVals, serialNumber, lastT);
 	
 	return patientMeasuredVals;
 }
 
 /* dopoèítá nevyplnìné položky krve a ist */
-PatientMeasuredVals * MeasuredCreator::recalculateBloodIst(dvector tbVec, dvector bVec, dvector tiVec, dvector iVec, PatientMeasuredVals * pmv, int k) {
+PatientMeasuredVals * MeasuredCreator::recalculateBloodIst(dvector tiVec, dvector iVec, PatientMeasuredVals * pmv, int k, double lastT) {
 	int j;
 	MeasuredVal * measuredVal;
 	
 	/* uloží vektory pro pozdìjší dopoèítávání */
-	tk::spline iFnc, bFnc;
+	tk::spline iFnc;
 
-	bFnc.set_points(tbVec, bVec);
 	iFnc.set_points(tiVec, iVec);
 
-	/* dopoèítá nevyplnìné hodnoty */
+	/* dopoèítá nevyplnìné hodnoty ist */
 	for (j = 0; j<k; j++)
 	{
 		measuredVal = pmv->getMeasuredVal(j);
-		if (measuredVal->b == 0.0) {
-			/* dopoèítá hodnotu b */
-			measuredVal->b = bFnc(measuredVal->t);
-		}
 
-		if (measuredVal->i == 0.0) {
-			/* dopoèítá hodnotu b */
-			measuredVal->i = bFnc(measuredVal->t);
+		if (measuredVal->i == 0.0 && measuredVal->t <= lastT) {
+			/* dopoèítá hodnotu i */
+			measuredVal->i = iFnc(measuredVal->t);
 		}
 
 	}
@@ -163,8 +166,8 @@ PatientMeasuredVals * MeasuredCreator::recalculateBloodIst(dvector tbVec, dvecto
 /* poèet všech hodnot jednoho pacienta */
 int MeasuredCreator::countMeasuredValByPatient(CppSQLite3DB * db, const char * patientId)
 {
-	char query[70];
-	strcpy_s(query, "SELECT count(id) FROM measuredvalue WHERE segmentid = ");
+	char query[90];
+	strcpy_s(query, "SELECT count(id) FROM measuredvalue WHERE blood IS NOT NULL AND segmentid = ");
 	strcat_s(query, patientId);
 	return db->execScalar(query);
 }
@@ -173,7 +176,7 @@ int MeasuredCreator::countMeasuredValByPatient(CppSQLite3DB * db, const char * p
 CppSQLite3Query MeasuredCreator::getMeasuredValByPatient(CppSQLite3DB * db, const char * patientId)
 {
 	CppSQLite3Query q;
-	char query[80];
+	char query[100];
 	strcpy_s(query, "SELECT measuredat, blood, ist FROM measuredvalue WHERE segmentid = ");
 	strcat_s(query, patientId);
 	q = db->execQuery(query);
